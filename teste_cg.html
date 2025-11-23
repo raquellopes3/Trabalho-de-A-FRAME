@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.5.x/dist/aframe-environment-component.min.js"></script>
+  
+</head>
+
+<script>
+  AFRAME.registerComponent('drive-wheels', {
+    schema: {
+      speed: {type: 'number', default: 0.1},
+      axis: {type: 'string', default: 'x'} // Usually X, but might be Z or Y depending on the model
+    },
+
+    init: function () {
+      this.wheels = []; // Array to store the wheel references
+
+      // Wait for the model to fully load into the scene
+      this.el.addEventListener('model-loaded', () => {
+        const obj = this.el.getObject3D('mesh');
+        
+        // The names from your screenshot
+        const wheelNames = [
+          '3DWheel Front L', 
+          '3DWheel Front R', 
+          '3DWheel Rear L', 
+          '3DWheel Rear R'
+        ];
+
+        // Traverse the 3D model to find the wheels
+        obj.traverse((node) => {
+          if (wheelNames.includes(node.name)) {
+            this.wheels.push(node);
+            console.log("Found wheel:", node.name); // Debug log
+          }
+        });
+      });
+    },
+
+    tick: function (time, timeDelta) {
+      // Rotate every wheel found in the array
+      if (this.wheels.length > 0) {
+        this.wheels.forEach((wheel) => {
+          // Adjust rotation based on the chosen axis
+          if (this.axis === 'x') wheel.rotation.x += this.data.speed;
+          if (this.axis === 'y') wheel.rotation.y += this.data.speed;
+          if (this.axis === 'z') wheel.rotation.z += this.data.speed;
+        });
+      }
+    }
+  });
+</script>
+
+<body>
+
+  <a-scene>
+
+    <a-assets>
+      <a-asset-item id="modelo-carro" src="./1994_toyota_supra_mk_iv_bomex_fast__furious.glb"></a-asset-item>
+      <a-asset-item id="carro-policial" src="./police_car.glb"></a-asset-item>
+      <a-asset-item id="skyline-brian" src="./1999_nissan_skyline_gtr_r34_c-west__2f2f.glb"></a-asset-item>
+    </a-assets>
+
+    <a-entity environment="preset: tron; lightPosition: 0 5 0"></a-entity>
+
+    <a-entity gltf-model="#modelo-carro"
+              position="0 -0.03 -3"
+              rotation="0 90 0"
+              scale="50.0 50.0 50.0"
+              animation__move="property: position;
+                           to: 15 -0.03 -3;
+                           dur: 3000;
+                           dir: alternate;
+                           loop: true"> 
+    </a-entity>
+
+
+<a-entity gltf-model="#carro-policial"
+          position="0 -0.03 -5"
+          rotation="0 90 0"
+          scale="0.4 0.4 0.4"
+          animation__move="property: position;
+                           to: 3 -0.03 -5;
+                           dur: 3000;
+                           dir: alternate;
+                           loop: true">
+</a-entity>
+
+
+<a-entity gltf-model="#skyline-brian"
+          position="0 -0.03 -7"
+          rotation="0 90 0"
+          scale="65.0 65.0 65.0"
+          animation__move="property: position;
+                           to: 15 -0.03 -7;
+                           dur: 3000;
+                           dir: alternate;
+                           loop: true"
+          drive-wheels="speed: 0.9; axis: x">
+
+</a-entity>
+
+    <a-camera position="0 1.6 0"></a-camera>
+
+  </a-scene>
+
+ <audio autoplay="autoplay" controls="controls">
+    <source src="Tokyo Drift - Teriyaki Boyz [ MUSIC VIDEO ] HD [iuJDhFRDx9M].mp3" type="audio/mp3" />
+
+</audio>
+
+</body>
+</html>
