@@ -38,6 +38,90 @@
       });
     }
   });
+
+AFRAME.registerComponent('humano-palito', {
+  schema: {
+    corCamisa: {type: 'color', default: 'blue'},
+    corCalca: {type: 'color', default: 'black'}
+  },
+
+  init: function () {
+    // Aqui nós criamos o HTML interno da pessoa automaticamente
+    // Usamos innerHTML para facilitar a leitura, é como injetar o código que você já conhece
+    
+    this.el.innerHTML = `
+      <a-sphere position="0 1.7 0" radius="0.2" color="#ffccaa"></a-sphere>
+      
+      <a-box position="0 1.3 0" depth="0.3" height="0.6" width="0.5" color="${this.data.corCamisa}"></a-box>
+      
+      <a-cylinder position="-0.15 0.5 0" radius="0.08" height="1" color="${this.data.corCalca}"></a-cylinder>
+      <a-cylinder position="0.15 0.5 0" radius="0.08" height="1" color="${this.data.corCalca}"></a-cylinder>
+    `;
+  }
+});
+
+  window.addEventListener('load', function () {
+
+  // --- AQUI ESTÁ A "MÁQUINA DE FAZER FILAS" (A Função) ---
+  function criarFila(idDoContainer, cor, quantidade) {
+    
+    // 1. Em vez de pegar a cena inteira, pegamos só o container especifico
+    const grupo = document.querySelector(idDoContainer);
+    
+    // Segurança: se o container não existir no HTML, para tudo.
+    if (!grupo) return; 
+
+    // Suas Configurações
+    const espacoEntreEles = 3.5; 
+    const alturaPulo = 0.5;      
+    const velocidadePulo = 500; 
+
+    // NOTA: Removi 'inicioX' e 'posZ'. 
+    // Agora a posição 0 é onde você colocar o container no HTML.
+
+    for (let i = 0; i < quantidade; i++) {
+      const pessoa = document.createElement('a-entity');
+      
+      // Usa a cor que pedimos na chamada da função
+      pessoa.setAttribute('humano-palito', 'corCamisa: ' + cor);
+
+      // 2. Calcula a posição RELATIVA (dentro do grupo)
+      // O primeiro fica no 0, o segundo no 3.5, etc.
+      const localX = i * espacoEntreEles;
+      
+      // Z e Y são 0 porque o container já define a altura e profundidade
+      pessoa.setAttribute('position', {x: localX, y: 0, z: 0});
+      
+      // Sua escala
+      pessoa.setAttribute('scale', '1 1 1'); 
+
+      const atraso = (i % 2 === 0) ? 0 : velocidadePulo;
+
+      pessoa.setAttribute('animation', {
+        property: 'position',
+        dir: 'alternate',
+        dur: velocidadePulo,
+        loop: true,
+        easing: 'easeInOutQuad',
+        delay: atraso,
+        // O pulo vai da base (0) até a altura (alturaPulo)
+        to: `${localX} ${alturaPulo} 0` 
+      });
+
+      // 3. Adiciona ao GRUPO, não à cena
+      grupo.appendChild(pessoa);
+    }
+  }
+
+  
+  //fila das pessoas de roxo
+  criarFila('#fila-roxo', 'purple', 19);
+
+  //fila das pessoas de verde
+  criarFila('#fila-verde', 'green', 19);
+
+});
+
   </script>
 </head>
 
@@ -50,7 +134,8 @@
       <a-asset-item id="carro-policial" src="./police_car.glb"></a-asset-item>
       <a-asset-item id="skyline-brian" src="./1999_nissan_skyline_gtr_r34_c-west__2f2f.glb"></a-asset-item>
       <a-asset-item id="cenario" src="./beautiful_city.glb"></a-asset-item>
-      <a-asset-item id="estrada" src="./concrete_road_barrier.glb"></a-asset-item>
+      <a-ssset-item id="lowrider" src="./cartoon_low_poly_chrysler_new_yorker_1980.glb"></a-ssset-item>
+      <a-ssset-item id="rally-carro" src="./evo_rally_car.glb"></a-ssset-item>
     </a-assets>
 
     <a-entity environment="preset: tron; lightPosition: 0 5 0; dressingScale: 1; dressingAmount:30"></a-entity>
@@ -80,15 +165,56 @@
        </a-entity>
     </a-entity>
 
+    <!--principal -->
     <a-entity gltf-model="#cenario"
        position="0 2.8 0"
        scale="5 5 3.5"
        rotation="0 0 0">
     </a-entity>
 
+    <!-- continuação da cidade -->
+    <a-entity gltf-model="#cenario"
+       position="34 2.8 5"
+       scale="5 5 3.5"
+       rotation="0 180 0">
+    </a-entity> 
+
+    <!-- continuação a direita da cidade-->
+     <!--
+    <a-entity gltf-model="#cenario"
+       position="-29 2.8 35"
+       scale="5 5 3.5"
+       rotation="0 90 0">
+    </a-entity> 
+    -->
+    
+    <a-entity gltf-model="#rally-carro"
+        position="2 0 0"
+        rotation="0 90 0"
+        scale="0.4 0.4 0.4"
+        animation__move="property: position; to: 54 -0.03 3; dur: 30000; dir: alternate; loop: true">
+    </a-entity>
+
+    <a-entity gltf-model="#lowrider"
+       position="-29 0.5 3"
+       scale="0.010 0.010 0.010"
+       rotation="0 0 180"
+       animation="property: rotation; 
+                     from: 0 90 0;
+                     to: 10 90 0;
+                     dir: alternate;
+                     dur: 400;
+                     easing: easeOutQuad;
+                     loop: true">
+    </a-entity>
+
+
+    <a-entity id="fila-roxo" position="-15 0 -1"></a-entity>
+    <a-entity id="fila-verde" position="-15 0 6.2"></a-entity>
   
 
-    <a-entity id="semaforo" position="3 1.5 2.5" semaforo-control class="clickable">
+
+    <a-entity id="semaforo" position="3 3.1 2.5" rotation="0 -90 0" semaforo-control class="clickable">
 
       <a-box color="#333" depth="0.3" height="1.6" width="0.6"></a-box>
       <a-sphere id="red" position="0 0.6 0.2" radius="0.15" color="#300"></a-sphere>
@@ -97,7 +223,7 @@
       
     </a-entity>
 
-    <a-camera position="0 1.6 6"> <a-cursor 
+    <a-camera position="0 2 6"> <a-cursor 
           color="yellow" 
           fuse="false" 
           scale="1.5 1.5 1.5"
