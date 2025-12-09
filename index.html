@@ -25,6 +25,7 @@
       <a-asset-item id="rally-carro" src="./Assets/evo_rally_car.glb"></a-asset-item>
       <a-asset-item id="curve-street" src="./Assets/curvas.glb"></a-asset-item>
       <a-asset-item id="mitsubishi_carro" src="./Assets/mitsubishi_minicab_2005.glb"></a-asset-item>
+      <audio id="carro-musica" src="./Sound/Tokyo Drift - Teriyaki Boyz [ MUSIC VIDEO ] HD [iuJDhFRDx9M].mp3"></audio>
     </a-assets>
 
     <a-entity environment="preset: tron; 
@@ -171,7 +172,14 @@
                   dir: alternate; 
                   dur: 400; 
                   easing: easeOutQuad; 
-                  loop: true">
+                  loop: true"
+      sound="src: #carro-musica; 
+           autoplay: true;
+           loop: true;
+           volume: 1.5;
+           positional: true;
+           refDistance: 5;
+           rolloffFactor: 1">
     </a-entity>
 
     <a-entity id="fila-roxo" position="-15 0 -1"></a-entity>
@@ -198,10 +206,6 @@
     </a-camera>
 
   </a-scene>
-
-  <audio autoplay controls>
-    <source src="./Sound/Tokyo Drift - Teriyaki Boyz [ MUSIC VIDEO ] HD [iuJDhFRDx9M].mp3" type="audio/mp3" />
-  </audio>
 
 </body>
 </html>
