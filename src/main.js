@@ -32,6 +32,26 @@ AFRAME.registerComponent('semaforo-control', {
   }
 });
 
+
+// --- RÁDIO LIGA/DESLIGA ---
+AFRAME.registerComponent('radio-interativo', {
+  init: function () {
+    let tocando = false; // Começa desligado
+
+    this.el.addEventListener('click', () => {
+      tocando = !tocando; // Inverte o estado
+
+      if (tocando) {
+        console.log("Rádio ligado");
+        this.el.components.sound.playSound(); // Dá Play
+      } else {
+        console.log("Rádio desligado");
+        this.el.components.sound.stopSound(); // Dá Stop
+      }
+    });
+  }
+});
+
 // --- COMPONENTE DO HUMANO PALITO ---
 AFRAME.registerComponent('humano-palito', {
   schema: {

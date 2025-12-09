@@ -26,6 +26,7 @@
       <a-asset-item id="curve-street" src="./Assets/curvas.glb"></a-asset-item>
       <a-asset-item id="mitsubishi_carro" src="./Assets/mitsubishi_minicab_2005.glb"></a-asset-item>
       <audio id="carro-musica" src="./Sound/Tokyo Drift - Teriyaki Boyz [ MUSIC VIDEO ] HD [iuJDhFRDx9M].mp3"></audio>
+      <audio id="radio-carro" src="./Sound/radio.mp3"></audio>
     </a-assets>
 
     <a-entity environment="preset: tron; 
@@ -134,32 +135,46 @@
     </a-entity>
 
     <a-entity gltf-model="#mitsubishi_carro"
+        radio-interativo class="clickable"
         position="-30 1.2 33"
         rotation="0 -180 0"
         scale="0.3 0.3 0.3"
+        sound="src: #radio-carro;
+           autoplay: false;
+           loop: true;
+           volume: 1;
+           positional: true;
+           refDistance: 3;
+           rolloffFactor: 1"
         animation__reta="property: position; 
                          to: 50 1.2 33; 
                          dur: 30000; 
                          easing: linear; 
                          startEvents: loaded, animationcomplete__reset_pos" 
         animation__curva_move="property: position; 
-                               to: 60 1.2 -40; 
-                               dur: 2000; 
+                               to: 56 1.2 2.5; 
+                               dur: 5000; 
                                easing: easeOutQuad; 
                                startEvents: animationcomplete__reta"
         animation__curva_gira="property: rotation; 
-                               to: 0 -360 0; 
-                               dur: 20000; 
-                               easing: easeOutQuad; 
-                               startEvents: animationcomplete__reta"
+                               to: 0 -90 0; 
+                               dur: 2000; 
+                               easing: easeOutQuad;
+                               startEvents: animationcomplete__reta" 
+        animation__reta_final="property: position;
+                               to: 90 1.2 0;
+                               dur: 3000;
+                               easing: linear;
+                               startEvents: animationcomplete__curva_move"
         animation__reset_pos="property: position; 
                               to: -30 1.2 33; 
                               dur: 0; 
-                              startEvents: animationcomplete__curva_move"
+                              startEvents: animationcomplete__reta_final"
+                              
         animation__reset_rot="property: rotation; 
                               to: 0 -180 0; 
                               dur: 0; 
-                              startEvents: animationcomplete__curva_move">
+                              startEvents: animationcomplete__reta_final">
     </a-entity>
 
     <a-entity gltf-model="#lowrider"
@@ -176,9 +191,9 @@
       sound="src: #carro-musica; 
            autoplay: true;
            loop: true;
-           volume: 1.5;
+           volume: 1;
            positional: true;
-           refDistance: 5;
+           refDistance: 3;
            rolloffFactor: 1">
     </a-entity>
 
