@@ -88,4 +88,6 @@ window.addEventListener('load', function () {
   // Criar as filas
   criarFila('#fila-roxo', 'purple', 19);
   criarFila('#fila-verde', 'green', 19);
+  criarFila('#fila-azul', 'blue', 10);
+  criarFila('#fila-amarelo', 'yellow', 10);
 });

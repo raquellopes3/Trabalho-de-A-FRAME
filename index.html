@@ -21,71 +21,163 @@
       <a-asset-item id="carro-policial" src="./Assets/police_car.glb"></a-asset-item>
       <a-asset-item id="skyline-brian" src="./Assets/1999_nissan_skyline_gtr_r34_c-west__2f2f.glb"></a-asset-item>
       <a-asset-item id="cenario" src="./Assets/beautiful_city.glb"></a-asset-item>
-      
       <a-asset-item id="lowrider" src="./Assets/cartoon_low_poly_chrysler_new_yorker_1980.glb"></a-asset-item>
       <a-asset-item id="rally-carro" src="./Assets/evo_rally_car.glb"></a-asset-item>
       <a-asset-item id="curve-street" src="./Assets/curvas.glb"></a-asset-item>
       <a-asset-item id="mitsubishi_carro" src="./Assets/mitsubishi_minicab_2005.glb"></a-asset-item>
     </a-assets>
 
-    <a-entity environment="preset: tron; lightPosition: 0 2 0; dressingScale: 0.5; dressingAmount:30"></a-entity>
+    <a-entity environment="preset: tron; 
+                           lightPosition: 0 2 0; 
+                           dressingScale: 0.5; 
+                           dressingAmount:30">
+    </a-entity>
 
-    <a-entity gltf-model="#cenario" position="0 2.8 0" scale="5 5 3.5" rotation="0 0 0"></a-entity>
-    <a-entity gltf-model="#cenario" position="34 2.8 5" scale="5 5 3.5" rotation="0 180 0"></a-entity> 
-    <a-entity gltf-model="#cenario" position="0 2.8 31.8" scale="5 5 3.5" rotation="0 360 0"></a-entity> 
-    <a-entity gltf-model="#curve-street" position="49 0.3 38.6" scale="2 2 2" rotation="0 180 0"></a-entity>
+    <a-entity gltf-model="#cenario" 
+              position="0 2.8 0" 
+              scale="5 5 3.5" 
+              rotation="0 0 0">
+    </a-entity>
+
+    <a-entity gltf-model="#cenario" 
+              position="34 2.8 5" 
+              scale="5 5 3.5" 
+              rotation="0 180 0">
+    </a-entity>
+
+    <a-entity gltf-model="#cenario" 
+              position="0 2.8 31.8" 
+              scale="5 5 3.5" 
+              rotation="0 360 0">
+    </a-entity>
+
+    <a-entity gltf-model="#curve-street" 
+              position="49 0.3 38.6" 
+              scale="2 2 2" 
+              rotation="0 180 0">
+    </a-entity>
 
     <a-entity gltf-model="#modelo-carro"
-        position="0 0.34 3"
-        rotation="0 90 0"
-        scale="50 50 50"
-        animation__move="property: position; to: 54 -0.03 3; dur: 3000; dir: alternate; loop: true"
-        animation="property: rotation; to: 0 -180 0; loop: true; dur: 5000; easing: linear">
+              position="0 0.34 3.5"
+              rotation="0 90 0"
+              scale="50 50 50"
+              animation__move="property: position; 
+                               to: 54 0.34 3.5; 
+                               dur: 3000; 
+                               dir: alternate; 
+                               loop: true"
+              animation="property: rotation; 
+                         to: 0 -180 0; 
+                         loop: true; 
+                         dur: 5000; 
+                         easing: linear">
     </a-entity>
 
     <a-entity gltf-model="#carro-policial"
-        position="-8 0.5 3"
+        position="-8 0.5 3.5"
         rotation="0 90 0"
         scale="0.4 0.4 0.4"
-        animation__move="property: position; to: 54 -0.03 3; dur: 3000; dir: alternate; loop: true">
+        animation__move="property: position; 
+                         to: 54 0.5 3.5; 
+                         dur: 3000; 
+                         dir: alternate; 
+                         loop: true">
     </a-entity>
 
     <a-entity position="-21.5 -0.03 3" 
-        animation="property: rotation; to: 0 -360 0; loop: true; dur: 5000; easing: linear">
-       <a-entity gltf-model="#skyline-brian" position="0 0.5 -4" rotation="0 0 0" scale="65 65 65"></a-entity>
+        animation="property: rotation; 
+                   to: 0 -360 0; 
+                   loop: true; 
+                   dur: 5000; 
+                   easing: linear">
+       <a-entity gltf-model="#skyline-brian" 
+                 position="0 0.5 -4" 
+                 rotation="0 0 0" 
+                 scale="65 65 65">
+       </a-entity>
     </a-entity>
     
     <a-entity gltf-model="#rally-carro"
         position="-30 0 35"
         rotation="0 90 0"
         scale="0.4 0.4 0.4"
-        animation__reta="property: position; to: 50 0 35; dur: 3000; easing: linear; startEvents: loaded, animationcomplete__reset_pos" 
-        animation__curva_move="property: position; to: 50 0 -40; dur: 2000; easing: easeOutQuad; startEvents: animationcomplete__reta"
-        animation__curva_gira="property: rotation; to: 0 0 0; dur: 2000; easing: easeOutQuad; startEvents: animationcomplete__reta"
-        animation__reset_pos="property: position; to: -30 0 35; dur: 0; startEvents: animationcomplete__curva_move"
-        animation__reset_rot="property: rotation; to: 0 90 0; dur: 0; startEvents: animationcomplete__curva_move">
+        animation__reta="property: position; 
+                         to: 50 0 35; 
+                         dur: 5000; 
+                         easing: linear; 
+                         startEvents: loaded, animationcomplete__reset_pos" 
+        animation__curva_move="property: position; 
+                               to: 56 0 2.5; 
+                               dur: 5000; 
+                               easing: easeOutQuad; 
+                               startEvents: animationcomplete__reta"
+        animation__curva_gira="property: rotation; 
+                               to: 0 -90 0; 
+                               dur: 2000; 
+                               easing: easeOutQuad;
+                               startEvents: animationcomplete__reta" 
+        animation__reta_final="property: position;
+                               to: 1 0 1;
+                               dur: 3000;
+                               easing: linear;
+                               startEvents: animationcomplete__curva_move"
+        animation__reset_pos="property: position; 
+                              to: -30 0 35; 
+                              dur: 0; 
+                              startEvents: animationcomplete__reta_final"
+                              
+        animation__reset_rot="property: rotation; 
+                              to: 0 90 0; 
+                              dur: 0; 
+                              startEvents: animationcomplete__reta_final">
     </a-entity>
 
     <a-entity gltf-model="#mitsubishi_carro"
         position="-30 1.2 33"
-        rotation="0 360 0"
+        rotation="0 -180 0"
         scale="0.3 0.3 0.3"
-        animation__reta="property: position; to: 50 1.2 33; dur: 30000; easing: linear; startEvents: loaded, animationcomplete__reset_pos" 
-        animation__curva_move="property: position; to: 50 1.2 -40; dur: 2000; easing: easeOutQuad; startEvents: animationcomplete__reta"
-        animation__curva_gira="property: rotation; to: 0 360 0; dur: 20000; easing: easeOutQuad; startEvents: animationcomplete__reta"
-        animation__reset_pos="property: position; to: -30 1.2 33; dur: 0; startEvents: animationcomplete__curva_move"
-        animation__reset_rot="property: rotation; to: 0 360 0; dur: 0; startEvents: animationcomplete__curva_move">
+        animation__reta="property: position; 
+                         to: 50 1.2 33; 
+                         dur: 30000; 
+                         easing: linear; 
+                         startEvents: loaded, animationcomplete__reset_pos" 
+        animation__curva_move="property: position; 
+                               to: 60 1.2 -40; 
+                               dur: 2000; 
+                               easing: easeOutQuad; 
+                               startEvents: animationcomplete__reta"
+        animation__curva_gira="property: rotation; 
+                               to: 0 -360 0; 
+                               dur: 20000; 
+                               easing: easeOutQuad; 
+                               startEvents: animationcomplete__reta"
+        animation__reset_pos="property: position; 
+                              to: -30 1.2 33; 
+                              dur: 0; 
+                              startEvents: animationcomplete__curva_move"
+        animation__reset_rot="property: rotation; 
+                              to: 0 -180 0; 
+                              dur: 0; 
+                              startEvents: animationcomplete__curva_move">
     </a-entity>
 
     <a-entity gltf-model="#lowrider"
        position="-29 0.5 3"
        scale="0.010 0.010 0.010"
        rotation="0 0 180"
-       animation="property: rotation; from: 0 90 0; to: 10 90 0; dir: alternate; dur: 400; easing: easeOutQuad; loop: true">
+       animation="property: rotation; 
+                  from: 0 90 0; 
+                  to: 10 90 0; 
+                  dir: alternate; 
+                  dur: 400; 
+                  easing: easeOutQuad; 
+                  loop: true">
     </a-entity>
 
     <a-entity id="fila-roxo" position="-15 0 -1"></a-entity>
     <a-entity id="fila-verde" position="-15 0 6.2"></a-entity>
+    <a-entity id="fila-azul" position="-15 0 31"></a-entity>
+    <a-entity id="fila-amarelo" position="-15 0 38.2"></a-entity>
   
     <a-entity id="semaforo" position="3 3.1 2.5" rotation="0 -90 0" semaforo-control class="clickable">
       <a-box color="#333" depth="0.3" height="1.6" width="0.6"></a-box>
