@@ -1,5 +1,3 @@
-// js/main.js
-
 // --- COMPONENTE DO SEMÁFORO ---
 AFRAME.registerComponent('semaforo-control', {
   init: function () {
@@ -7,22 +5,32 @@ AFRAME.registerComponent('semaforo-control', {
     const yellow = this.el.querySelector('#yellow');
     const green = this.el.querySelector('#green');
 
-    let state = 0; // 0=vermelho, 1=amarelo, 2=verde
+    let state = 2; // 0=vermelho (Começa fechado)
 
     const updateLights = () => {
+      // 1. Muda as cores visuais
       red.setAttribute('color', state === 0 ? '#FF0000' : '#300');
       yellow.setAttribute('color', state === 1 ? '#FFFF00' : '#330');
       green.setAttribute('color', state === 2 ? '#00FF00' : '#030');
+
+      // 2. AVISA A CENA (NOVO)
+      if (state === 2) { 
+        console.log("SINAL VERDE: Todos andam");
+        this.el.sceneEl.emit('sinal-verde'); 
+      } else {
+        console.log("SINAL FECHADO: Todos param");
+        this.el.sceneEl.emit('sinal-vermelho');
+      }
     };
 
-    updateLights();
+    updateLights(); // Chama no início
 
     this.el.addEventListener('click', () => {
       state = (state + 1) % 3;
       updateLights();
-      console.log("Semaforo clicado! Novo estado: " + state);
     });
-
+    
+    // ... mouseenter/mouseleave continuam iguais ...
     this.el.addEventListener('mouseenter', () => {
       this.el.querySelector('a-box').setAttribute('color', '#555');
     });
@@ -32,6 +40,24 @@ AFRAME.registerComponent('semaforo-control', {
   }
 });
 
+
+// --- MOTORISTA OBEDIENTE (Pausa/Despausa com o sinal) ---
+AFRAME.registerComponent('motorista-obediente', {
+  init: function () {
+    // 1. Começa PAUSADO (porque o sinal começa vermelho)
+    this.el.pause(); 
+
+    // 2. Se ouvir "sinal-verde", dá play
+    this.el.sceneEl.addEventListener('sinal-verde', () => {
+      this.el.play(); 
+    });
+
+    // 3. Se ouvir "sinal-vermelho", dá pause
+    this.el.sceneEl.addEventListener('sinal-vermelho', () => {
+      this.el.pause();
+    });
+  }
+});
 
 // --- RÁDIO LIGA/DESLIGA ---
 AFRAME.registerComponent('radio-interativo', {
@@ -82,6 +108,7 @@ window.addEventListener('load', function () {
 
     for (let i = 0; i < quantidade; i++) {
       const pessoa = document.createElement('a-entity');
+      pessoa.setAttribute('motorista-obediente', '');
       pessoa.setAttribute('humano-palito', 'corCamisa: ' + cor);
 
       const localX = i * espacoEntreEles;

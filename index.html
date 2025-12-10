@@ -60,6 +60,7 @@
     </a-entity>
 
     <a-entity gltf-model="#modelo-carro"
+              motorista-obediente
               position="0 0.34 3.5"
               rotation="0 90 0"
               scale="50 50 50"
@@ -76,6 +77,7 @@
     </a-entity>
 
     <a-entity gltf-model="#carro-policial"
+        motorista-obediente
         position="-8 0.5 3.5"
         rotation="0 90 0"
         scale="0.4 0.4 0.4"
@@ -87,6 +89,7 @@
     </a-entity>
 
     <a-entity position="-21.5 -0.03 3" 
+        motorista-obediente
         animation="property: rotation; 
                    to: 0 -360 0; 
                    loop: true; 
@@ -100,6 +103,7 @@
     </a-entity>
     
     <a-entity gltf-model="#rally-carro"
+        motorista-obediente
         position="-30 0 35"
         rotation="0 90 0"
         scale="0.4 0.4 0.4"
@@ -135,6 +139,7 @@
     </a-entity>
 
     <a-entity gltf-model="#mitsubishi_carro"
+        motorista-obediente
         radio-interativo class="clickable"
         position="-30 1.2 33"
         rotation="0 -180 0"
@@ -148,7 +153,7 @@
            rolloffFactor: 1"
         animation__reta="property: position; 
                          to: 50 1.2 33; 
-                         dur: 30000; 
+                         dur: 5000; 
                          easing: linear; 
                          startEvents: loaded, animationcomplete__reset_pos" 
         animation__curva_move="property: position; 
@@ -157,13 +162,13 @@
                                easing: easeOutQuad; 
                                startEvents: animationcomplete__reta"
         animation__curva_gira="property: rotation; 
-                               to: 0 -90 0; 
-                               dur: 2000; 
+                               to: 0 177 0; 
+                               dur: 5000; 
                                easing: easeOutQuad;
                                startEvents: animationcomplete__reta" 
         animation__reta_final="property: position;
-                               to: 90 1.2 0;
-                               dur: 3000;
+                               to: 90 1.1 0;
+                               dur: 5000;
                                easing: linear;
                                startEvents: animationcomplete__curva_move"
         animation__reset_pos="property: position; 
@@ -178,6 +183,7 @@
     </a-entity>
 
     <a-entity gltf-model="#lowrider"
+       motorista-obediente
        position="-29 0.5 3"
        scale="0.010 0.010 0.010"
        rotation="0 0 180"
